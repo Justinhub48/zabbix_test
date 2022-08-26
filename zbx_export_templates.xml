@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>5.0</version>
+    <date>2022-08-26T09:32:38Z</date>
+    <groups>
+        <group>
+            <name>Templates/Operating systems</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <template>Some services</template>
+            <name>Some services</name>
+            <groups>
+                <group>
+                    <name>Templates/Operating systems</name>
+                </group>
+            </groups>
+            <applications>
+                <application>
+                    <name>get_nr_app</name>
+                </application>
+            </applications>
+            <items>
+                <item>
+                    <name>get highest number</name>
+                    <type>TRAP</type>
+                    <key>highest.number</key>
+                    <delay>0</delay>
+                    <status>DISABLED</status>
+                </item>
+                <item>
+                    <name>CPU load</name>
+                    <key>system.cpu.load[all,avg1]</key>
+                    <value_type>FLOAT</value_type>
+                    <triggers>
+                        <trigger>
+                            <expression>{nodata(5m,strict)}=1</expression>
+                            <name>CPU load</name>
+                            <priority>WARNING</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <name>get agent hostname</name>
+                    <key>system.run[hostname]</key>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                </item>
+                <item>
+                    <name>run calc script</name>
+                    <key>system.run[python3 /home/justinas/Desktop/calc.py]</key>
+                    <trends>0</trends>
+                    <value_type>CHAR</value_type>
+                    <triggers>
+                        <trigger>
+                            <expression>{nodata(180)}=1</expression>
+                            <name>No CPU data</name>
+                            <priority>WARNING</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+            </items>
+        </template>
+    </templates>
+    <graphs>
+        <graph>
+            <name>CPU load</name>
+            <graph_items>
+                <graph_item>
+                    <sortorder>1</sortorder>
+                    <color>1A7C11</color>
+                    <item>
+                        <host>Some services</host>
+                        <key>system.cpu.load[all,avg1]</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+        <graph>
+            <name>highest number</name>
+            <graph_items>
+                <graph_item>
+                    <sortorder>1</sortorder>
+                    <color>FF0000</color>
+                    <item>
+                        <host>Some services</host>
+                        <key>highest.number</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+    </graphs>
+</zabbix_export>
